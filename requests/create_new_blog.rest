@@ -1,0 +1,39 @@
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+
+{
+    "title": "user1 lisäys",
+    "author": "USER1",
+    "url": "www.user1.fi"
+}
+
+#####
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+
+{
+    "title": "user3 lisäys",
+    "author": "USER3",
+    "url": "www.user3.fi",
+    "likes": 5
+}
+
+####
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+
+{
+    "title": "On let vs const",
+    "author": "Dan Abramov",
+    "url": "www.danabramov.com"
+}
+
+####
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+
+{
+    "title": "Gaps in sequences in PostgreSQL",
+    "author": "Laurenz Albe",
+    "url": "www.laurenzalbe.com"
+}
