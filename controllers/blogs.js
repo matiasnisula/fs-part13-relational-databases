@@ -9,12 +9,8 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
   console.log("body:", req.body);
-  try {
-    const blog = await Blog.create(req.body);
-    res.json(blog);
-  } catch (error) {
-    res.status(400).json({ error });
-  }
+  const blog = await Blog.create(req.body);
+  res.json(blog);
 });
 
 router.delete("/:id", async (req, res) => {
@@ -29,18 +25,22 @@ router.delete("/:id", async (req, res) => {
   if (result === 1) {
     return res.status(204).end();
   }
-  res.status(400).json({ error: `Cant find blog with id ${id}` });
+  res.status(404).json({ error: `Cant find blog with id ${id}` });
 });
 
 router.put("/:id", async (req, res) => {
   const blog = await Blog.findByPk(req.params.id);
-  if (blog) {
-    blog.likes = req.body.likes;
-    const updatedBlog = await blog.save();
-    res.json(updatedBlog);
-  } else {
-    res.json(404).end();
+  if (!req.body.likes) {
+    return res.status(400).json({ error: "likes is needed as input" });
   }
+  if (!blog) {
+    return res
+      .status(404)
+      .json({ error: `Cant find blog with id ${req.params.id}` });
+  }
+  blog.likes = req.body.likes;
+  const updatedBlog = await blog.save();
+  res.json(updatedBlog);
 });
 
 module.exports = router;
