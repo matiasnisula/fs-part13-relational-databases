@@ -32,4 +32,15 @@ router.delete("/:id", async (req, res) => {
   res.status(400).json({ error: `Cant find blog with id ${id}` });
 });
 
+router.put("/:id", async (req, res) => {
+  const blog = await Blog.findByPk(req.params.id);
+  if (blog) {
+    blog.likes = req.body.likes;
+    const updatedBlog = await blog.save();
+    res.json(updatedBlog);
+  } else {
+    res.json(404).end();
+  }
+});
+
 module.exports = router;
