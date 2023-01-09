@@ -18,7 +18,6 @@ router.post("/", async (req, res) => {
   res.json(user);
 });
 
-//change username
 router.put("/:username", async (req, res) => {
   const username = req.params.username;
   const body = req.body;
@@ -51,7 +50,7 @@ router.get("/:id", async (req, res) => {
         as: "marked_blogs",
         attributes: { exclude: ["createdAt", "updatedAt", "userId"] },
         through: {
-          attributes: [],
+          attributes: ["id", "read"],
         },
       },
     ],
