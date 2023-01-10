@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const User = require("../models/user");
+const { User, Session } = require("../models");
 const { SECRET } = require("./config");
 
 const errorHandler = (error, req, res, next) => {
@@ -42,6 +42,19 @@ const userExtractor = async (req, res, next) => {
       error: "User doesnt exists",
     });
   }
+  const result = await Session.findOne({
+    where: {
+      userId: user.id,
+      token: token,
+    },
+  });
+  console.log("resultSessions:", JSON.stringify(result, null, 2));
+  if (!result) {
+    return res
+      .status(401)
+      .json({ error: "Session has expired. Please login again." });
+  }
+
   req.user = user;
   next();
 };
