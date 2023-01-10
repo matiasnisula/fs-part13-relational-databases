@@ -2,14 +2,17 @@ const Sequelize = require("sequelize");
 const { DATABASE_URL } = require("./config");
 const { Umzug, SequelizeStorage } = require("umzug");
 
-const sequelize = new Sequelize(DATABASE_URL, {
-  dialect: "postgres",
-  dialectOptions: {
-    useUTC: false,
-    timezone: "+02:00",
-  },
-  timezone: "+02:00",
-});
+const types = require("pg").types;
+const TIMESTAMPTZ_ID = 1184;
+
+const setTimezoneToTimestamp = () => {
+  types.setTypeParser(TIMESTAMPTZ_ID, (value) => {
+    return new Date(value + "-0200");
+  });
+};
+setTimezoneToTimestamp();
+
+const sequelize = new Sequelize(DATABASE_URL);
 
 const migrationConf = {
   migrations: {
