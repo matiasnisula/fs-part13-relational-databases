@@ -35,7 +35,6 @@ router.post("/", async (req, res) => {
   if (!result) {
     return res.status(400).json({ error: "Login failed" });
   }
-  console.log("resultLogin:", result.toJSON());
   res.status(200).send({ token, username: user.username, name: user.name });
 });
 

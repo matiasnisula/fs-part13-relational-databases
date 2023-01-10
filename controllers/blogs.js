@@ -35,7 +35,6 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", userExtractor, async (req, res) => {
-  console.log("body:", req.body);
   const blog = await Blog.create({ ...req.body, userId: req.user.id });
   res.json(blog);
 });
@@ -43,7 +42,6 @@ router.post("/", userExtractor, async (req, res) => {
 router.delete("/:id", userExtractor, async (req, res) => {
   const id = req.params.id;
   const user = req.user;
-  console.log("loggedUser:", user.toJSON());
   const blog = await Blog.findByPk(id);
 
   if (!blog) {

@@ -48,7 +48,6 @@ const userExtractor = async (req, res, next) => {
       token: token,
     },
   });
-  console.log("resultSessions:", JSON.stringify(result, null, 2));
   if (!result) {
     return res
       .status(401)

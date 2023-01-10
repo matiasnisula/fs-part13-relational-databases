@@ -13,7 +13,6 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  console.log("body:", req.body);
   const user = await User.create(req.body);
   res.json(user);
 });
@@ -21,8 +20,6 @@ router.post("/", async (req, res) => {
 router.put("/:username", async (req, res) => {
   const username = req.params.username;
   const body = req.body;
-  console.log("param username:", username);
-  console.log("body:", body);
   const user = await User.findOne({
     where: {
       username: username,
@@ -33,10 +30,8 @@ router.put("/:username", async (req, res) => {
       .status(400)
       .json({ error: `Cant find user with username ${username}` });
   }
-  console.log("user found:", user.toJSON());
   user.username = body.username;
   const updatedUser = await user.save();
-  console.log("updatedUser:", updatedUser.toJSON());
   res.json(updatedUser);
 });
 
